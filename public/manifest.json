@@ -1,0 +1,38 @@
+{
+  "name": "Myki残高チェッカー",
+  "short_name": "Myki Balance",
+  "description": "NFCを使用してMykiカードの残高を確認するアプリ",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["travel", "utilities"],
+  "lang": "ja",
+  "shortcuts": [
+    {
+      "name": "残高確認",
+      "short_name": "残高確認",
+      "description": "Mykiカードの残高を確認",
+      "url": "/",
+      "icons": [
+        {
+          "src": "/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+} 
