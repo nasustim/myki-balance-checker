@@ -1,0 +1,22 @@
+name: Lint
+
+on:
+  pull_request:
+
+jobs:
+  biome:
+    runs-on: ubuntu-latest 
+    timeout-minutes: 10
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run check
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+  
