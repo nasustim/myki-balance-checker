@@ -15,7 +15,7 @@ export interface NDEFRecord {
   recordType: string;
   mediaType?: string;
   id?: string;
-  data?: DataView;
+  data?: ArrayBuffer;
   encoding?: string;
   lang?: string;
 }
@@ -23,8 +23,8 @@ export interface NDEFRecord {
 // NDEF Reader Interface
 // Reference: https://w3c.github.io/web-nfc/#ndefreader-interface
 export interface NDEFReader {
-  addEventListener(type: 'reading', listener: (event: NDEFReadingEvent) => void): void;
-  addEventListener(type: 'readingerror', listener: (event: Event) => void): void;
+  addEventListener(type: string, listener: (event: NDEFReadingEvent) => void): void;
+  removeEventListener(type: string, listener: (event: NDEFReadingEvent) => void): void;
   scan(options?: NDEFScanOptions): Promise<void>;
   write(message: NDEFMessage | string, options?: NDEFWriteOptions): Promise<void>;
 }
@@ -54,5 +54,6 @@ export interface NDEFWriteOptions {
 export interface NFCSupport {
   isSupported: boolean;
   isSecureContext: boolean;
+  hasNDEFReader: boolean;
   userAgent: string;
 }
