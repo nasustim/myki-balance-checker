@@ -21,7 +21,7 @@ on:
       build-command:
         description: 'Build command to run'
         required: false
-        default: 'npm run export'
+        default: 'npm run build'
         type: string
       artifact-path:
         description: 'Path to artifact directory'
