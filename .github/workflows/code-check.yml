@@ -1,0 +1,14 @@
+name: Code Check
+
+on:
+  pull_request:
+
+jobs:
+  quality-check:
+    uses: ./.github/workflows/_quality-check.yml
+    with:
+      timeout-minutes: 10
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true

@@ -1,0 +1,52 @@
+name: Quality Check
+
+on:
+  workflow_call:
+    inputs:
+      node-version-file:
+        description: 'Node.js version file path'
+        required: false
+        default: './.tool-versions'
+        type: string
+      cache-dependency-path:
+        description: 'Path to package-lock.json'
+        required: false
+        default: './package-lock.json'
+        type: string
+      timeout-minutes:
+        description: 'Timeout for each job in minutes'
+        required: false
+        default: 10
+        type: number
+      skip-tests:
+        description: 'Skip running tests'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  type-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ${{ inputs.node-version-file }}
+          cache: 'npm'
+          cache-dependency-path: ${{ inputs.cache-dependency-path }}
+      - run: npm ci
+      - run: npm run type-check
+
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ${{ inputs.node-version-file }}
+          cache: 'npm'
+          cache-dependency-path: ${{ inputs.cache-dependency-path }}
+      - run: npm ci
+      - run: npm run check
