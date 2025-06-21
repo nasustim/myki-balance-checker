@@ -36,6 +36,7 @@ export default function Home() {
             </div>
             {cardData && (
               <button
+                type="button"
                 onClick={clearData}
                 className="rounded-lg bg-gray-500 px-4 py-2 font-medium text-white transition-colors hover:bg-gray-600"
               >

@@ -1,16 +1,23 @@
 // Re-export all types for backward compatibility
 export * from './types';
 
-import { BinaryAnalysis, dataViewToHex } from '@/repository/nfc';
+import { dataViewToHex } from '@/repository/nfc';
+import {
+  calculateDataEntropy,
+  extractPossibleStrings,
+  findDataPatterns,
+  findRepeatingPatterns,
+} from '@/repository/nfc/binary-analysis';
 import { MYKI_PATTERNS } from './constants';
-// Import dependencies
 import type { MykiAnalysisResult, MykiCardData, MykiPotentialField } from './types';
 
 // Myki Feature - Myki-specific functionality
 // ==========================================
 
 // Parse Myki card data from NFC message
-export function parseMykiCardData(message: any): MykiCardData {
+export function parseMykiCardData(message: {
+  records?: Array<{ recordType: string; mediaType?: string; data?: DataView }>;
+}): MykiCardData {
   console.log('🔍 Starting Myki card data analysis...');
 
   const cardData: MykiCardData = {};
@@ -23,7 +30,7 @@ export function parseMykiCardData(message: any): MykiCardData {
     }
 
     // Analyze each record
-    message.records.forEach((record: any, index: number) => {
+    message.records.forEach((record, index: number) => {
       console.log(`📋 Analyzing record ${index}:`, {
         recordType: record.recordType,
         mediaType: record.mediaType,
@@ -68,11 +75,11 @@ function analyzeMykiRecordData(dataView: DataView, recordIndex: number): MykiAna
     recordIndex,
     totalBytes: bytes.length,
     hexData: hexString,
-    patterns: BinaryAnalysis.findDataPatterns(bytes),
+    patterns: findDataPatterns(bytes),
     potentialFields: identifyMykiPotentialFields(bytes),
-    entropy: BinaryAnalysis.calculateDataEntropy(bytes),
-    repeatingPatterns: BinaryAnalysis.findRepeatingPatterns(bytes),
-    possibleStrings: BinaryAnalysis.extractPossibleStrings(bytes),
+    entropy: calculateDataEntropy(bytes),
+    repeatingPatterns: findRepeatingPatterns(bytes),
+    possibleStrings: extractPossibleStrings(bytes),
   };
 
   console.log(`🔬 Record ${recordIndex} Myki analysis:`, analysis);
@@ -140,9 +147,9 @@ function extractMykiData(
   const extractedData: Partial<MykiCardData> = {};
 
   // Find highest confidence balance
-  const balanceFields = analysis.potentialFields.filter((f: any) => f.type === 'potential_balance');
+  const balanceFields = analysis.potentialFields.filter((f) => f.type === 'potential_balance');
   if (balanceFields.length > 0) {
-    const bestBalance = balanceFields.reduce((best: any, current: any) =>
+    const bestBalance = balanceFields.reduce((best, current) =>
       current.confidence > best.confidence ? current : best
     );
 
@@ -155,11 +162,9 @@ function extractMykiData(
   }
 
   // Find potential timestamps for last transaction
-  const timestampFields = analysis.potentialFields.filter(
-    (f: any) => f.type === 'potential_timestamp'
-  );
+  const timestampFields = analysis.potentialFields.filter((f) => f.type === 'potential_timestamp');
   if (timestampFields.length > 0) {
-    const recentTimestamp = timestampFields.reduce((recent: any, current: any) =>
+    const recentTimestamp = timestampFields.reduce((recent, current) =>
       (current.value as Date) > (recent.value as Date) ? current : recent
     );
 
@@ -182,12 +187,12 @@ function performMykiEnhancedAnalysis(analysisResults: MykiAnalysisResult[]): Par
 
   // Aggregate potential balances across all records
   const allBalances = analysisResults.flatMap((result) =>
-    result.potentialFields.filter((f: any) => f.type === 'potential_balance')
+    result.potentialFields.filter((f) => f.type === 'potential_balance')
   );
 
   if (allBalances.length > 0) {
     // Select balance with highest confidence
-    const bestBalance = allBalances.reduce((best: any, current: any) =>
+    const bestBalance = allBalances.reduce((best, current) =>
       current.confidence > best.confidence ? current : best
     );
 

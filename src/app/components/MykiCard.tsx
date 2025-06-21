@@ -7,6 +7,68 @@ interface MykiCardProps {
   error: string | null;
 }
 
+// Helper component for status indicators
+function StatusIndicator({
+  isActive,
+  label,
+  status,
+}: {
+  isActive: boolean;
+  label: string;
+  status: string;
+}) {
+  return (
+    <div className="text-center">
+      <div
+        className={`mx-auto mb-1 h-3 w-3 rounded-full ${isActive ? 'bg-green-500' : 'bg-gray-300'}`}
+      />
+      <p className="font-medium">{label}</p>
+      <p className="text-gray-600">{status}</p>
+    </div>
+  );
+}
+
+// Helper component for transaction item
+function TransactionItem({
+  transaction,
+  index,
+}: {
+  transaction: {
+    date: Date;
+    amount: number;
+    type: 'debit' | 'credit';
+    location?: string;
+  };
+  index: number;
+}) {
+  const transactionId = `${transaction.date.getTime()}-${transaction.amount}-${index}`;
+
+  return (
+    <div key={transactionId} className="flex items-center justify-between p-4">
+      <div>
+        <p className="font-medium text-gray-900">
+          {transaction.type === 'debit' ? '支払い' : 'チャージ'}
+        </p>
+        <p className="text-gray-500 text-sm">{transaction.location || '場所不明'}</p>
+        <p className="text-gray-500 text-sm">
+          {transaction.date.toLocaleDateString('ja-JP')}{' '}
+          {transaction.date.toLocaleTimeString('ja-JP', {
+            hour: '2-digit',
+            minute: '2-digit',
+          })}
+        </p>
+      </div>
+      <div
+        className={`font-semibold ${
+          transaction.type === 'debit' ? 'text-red-600' : 'text-green-600'
+        }`}
+      >
+        {transaction.type === 'debit' ? '-' : '+'}${transaction.amount.toFixed(2)}
+      </div>
+    </div>
+  );
+}
+
 export default function MykiCard({ cardData, error }: MykiCardProps) {
   if (error) {
     return (
@@ -22,6 +84,7 @@ export default function MykiCard({ cardData, error }: MykiCardProps) {
       <div className="rounded-lg border border-gray-200 bg-gray-50 p-6 text-center">
         <div className="mb-4 text-gray-400">
           <svg className="mx-auto h-16 w-16" fill="currentColor" viewBox="0 0 20 20">
+            <title>Card Icon</title>
             <path
               fillRule="evenodd"
               d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm0 2h12v8H4V6z"
@@ -62,27 +125,21 @@ export default function MykiCard({ cardData, error }: MykiCardProps) {
           🔬 データ解析ステータス
         </h3>
         <div className="grid grid-cols-1 gap-4 text-sm md:grid-cols-3">
-          <div className="text-center">
-            <div
-              className={`mx-auto mb-1 h-3 w-3 rounded-full ${cardData.balance ? 'bg-green-500' : 'bg-gray-300'}`}
-            />
-            <p className="font-medium">残高解析</p>
-            <p className="text-gray-600">{cardData.balance ? '成功' : '未検出'}</p>
-          </div>
-          <div className="text-center">
-            <div
-              className={`mx-auto mb-1 h-3 w-3 rounded-full ${cardData.lastTransaction ? 'bg-green-500' : 'bg-gray-300'}`}
-            />
-            <p className="font-medium">取引履歴</p>
-            <p className="text-gray-600">{cardData.lastTransaction ? '検出済み' : '未検出'}</p>
-          </div>
-          <div className="text-center">
-            <div
-              className={`mx-auto mb-1 h-3 w-3 rounded-full ${cardData.cardNumber ? 'bg-green-500' : 'bg-gray-300'}`}
-            />
-            <p className="font-medium">カード識別</p>
-            <p className="text-gray-600">{cardData.cardNumber ? '完了' : '未完了'}</p>
-          </div>
+          <StatusIndicator
+            isActive={!!cardData.balance}
+            label="残高解析"
+            status={cardData.balance ? '成功' : '未検出'}
+          />
+          <StatusIndicator
+            isActive={!!cardData.lastTransaction}
+            label="取引履歴"
+            status={cardData.lastTransaction ? '検出済み' : '未検出'}
+          />
+          <StatusIndicator
+            isActive={!!cardData.cardNumber}
+            label="カード識別"
+            status={cardData.cardNumber ? '完了' : '未完了'}
+          />
         </div>
       </div>
 
@@ -127,28 +184,11 @@ export default function MykiCard({ cardData, error }: MykiCardProps) {
           </div>
           <div className="divide-y divide-gray-200">
             {cardData.transactions.slice(0, 10).map((transaction, index) => (
-              <div key={index} className="flex items-center justify-between p-4">
-                <div>
-                  <p className="font-medium text-gray-900">
-                    {transaction.type === 'debit' ? '支払い' : 'チャージ'}
-                  </p>
-                  <p className="text-gray-500 text-sm">{transaction.location || '場所不明'}</p>
-                  <p className="text-gray-500 text-sm">
-                    {transaction.date.toLocaleDateString('ja-JP')}{' '}
-                    {transaction.date.toLocaleTimeString('ja-JP', {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
-                  </p>
-                </div>
-                <div
-                  className={`font-semibold ${
-                    transaction.type === 'debit' ? 'text-red-600' : 'text-green-600'
-                  }`}
-                >
-                  {transaction.type === 'debit' ? '-' : '+'}${transaction.amount.toFixed(2)}
-                </div>
-              </div>
+              <TransactionItem
+                key={`${transaction.date.getTime()}-${index}`}
+                transaction={transaction}
+                index={index}
+              />
             ))}
           </div>
           {cardData.transactions.length > 10 && (

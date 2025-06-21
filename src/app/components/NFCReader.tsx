@@ -36,21 +36,24 @@ export default function NFCReader({ onCardRead, onError }: NFCReaderProps) {
       setIsReading(true);
 
       // Set up event listeners
-      reader.addEventListener('reading', ({ message, serialNumber }: any) => {
-        console.log('NFC card detected:', serialNumber);
+      reader.addEventListener(
+        'reading',
+        ({ message, serialNumber }: { message: any; serialNumber: string }) => {
+          console.log('NFC card detected:', serialNumber);
 
-        // Log raw data for analysis
-        logNFCData(message);
+          // Log raw data for analysis
+          logNFCData(message);
 
-        // Parse Myki card data
-        const cardData = parseMykiCardData(message);
-        cardData.cardNumber = serialNumber;
+          // Parse Myki card data
+          const cardData = parseMykiCardData(message);
+          cardData.cardNumber = serialNumber;
 
-        onCardRead(cardData);
-        setIsReading(false);
-      });
+          onCardRead(cardData);
+          setIsReading(false);
+        }
+      );
 
-      reader.addEventListener('readingerror', (event: any) => {
+      reader.addEventListener('readingerror', (event: Event) => {
         console.error('NFC reading error:', event);
         onError('カードの読み取りに失敗しました');
         setIsReading(false);
@@ -118,6 +121,7 @@ export default function NFCReader({ onCardRead, onError }: NFCReaderProps) {
             カードをデバイスの背面に近づけて、読み取りボタンを押してください。
           </p>
           <button
+            type="button"
             onClick={startReading}
             className="w-full rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-blue-700"
           >
@@ -131,6 +135,7 @@ export default function NFCReader({ onCardRead, onError }: NFCReaderProps) {
           </div>
           <p className="font-medium text-blue-700">カードをデバイスに近づけてください...</p>
           <button
+            type="button"
             onClick={stopReading}
             className="rounded bg-gray-500 px-4 py-2 font-semibold text-white transition-colors hover:bg-gray-600"
           >
