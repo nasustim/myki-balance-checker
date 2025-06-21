@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import NFCReader from '@/app/components/NFCReader';
 import MykiCard from '@/app/components/MykiCard';
-import { MykiCardData } from '@/features/nfc';
+import NFCReader from '@/app/components/NFCReader';
+import type { MykiCardData } from '@/feature/myki';
 
 export default function Home() {
   const [cardData, setCardData] = useState<MykiCardData | null>(null);
@@ -27,21 +27,17 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-4xl mx-auto px-4 py-6">
+      <header className="border-b bg-white shadow-sm">
+        <div className="mx-auto max-w-4xl px-4 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                Myki残高チェッカー
-              </h1>
-              <p className="text-gray-600 mt-1">
-                NFCを使用してMykiカードの残高を確認
-              </p>
+              <h1 className="font-bold text-3xl text-gray-900">Myki残高チェッカー</h1>
+              <p className="mt-1 text-gray-600">NFCを使用してMykiカードの残高を確認</p>
             </div>
             {cardData && (
               <button
                 onClick={clearData}
-                className="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+                className="rounded-lg bg-gray-500 px-4 py-2 font-medium text-white transition-colors hover:bg-gray-600"
               >
                 リセット
               </button>
@@ -51,7 +47,7 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-4 py-8">
+      <main className="mx-auto max-w-4xl px-4 py-8">
         <div className="space-y-8">
           {/* NFC Reader Section */}
           <section>
@@ -64,40 +60,33 @@ export default function Home() {
           </section>
 
           {/* Information Section */}
-          <section className="bg-white p-6 border border-gray-200 rounded-lg">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              アプリについて
-            </h2>
+          <section className="rounded-lg border border-gray-200 bg-white p-6">
+            <h2 className="mb-4 font-semibold text-gray-800 text-xl">アプリについて</h2>
             <div className="prose prose-sm text-gray-600">
               <p className="mb-3">
                 このアプリはWeb NFC APIを使用してMykiカードから直接データを読み取り、
                 残高と利用履歴を表示します。
               </p>
-              
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
-                <h3 className="font-semibold text-yellow-800 mb-2">
-                  ⚠️ 開発版について
-                </h3>
-                <ul className="text-yellow-700 text-sm space-y-1">
-                  <li>• 現在はNFCカード検出の基本機能のみ実装</li>
-                  <li>• Mykiカードの実際のデータ解析は今後実装予定</li>
-                  <li>• 表示される残高・履歴は現在プレースホルダーです</li>
+
+              <div className="mb-4 rounded-lg border border-green-200 bg-green-50 p-4">
+                <h3 className="mb-2 font-semibold text-green-800">🏗️ アーキテクチャ改善完了</h3>
+                <ul className="space-y-1 text-green-700 text-sm">
+                  <li>• NFC汎用機能とMyki固有機能を分離</li>
+                  <li>• 保守性と拡張性を大幅に向上</li>
+                  <li>• 他の交通カードシステムへの対応が容易</li>
+                  <li>• Phase 2のデータ解析エンジンを継承</li>
                 </ul>
               </div>
 
-              <h3 className="font-semibold text-gray-800 mb-2">
-                対応環境
-              </h3>
-              <ul className="list-disc list-inside space-y-1 mb-4">
+              <h3 className="mb-2 font-semibold text-gray-800">対応環境</h3>
+              <ul className="mb-4 list-inside list-disc space-y-1">
                 <li>Android デバイス（NFC機能付き）</li>
                 <li>Chrome for Android（バージョン89以降）</li>
                 <li>HTTPS接続（セキュリティ要件）</li>
               </ul>
 
-              <h3 className="font-semibold text-gray-800 mb-2">
-                使用方法
-              </h3>
-              <ol className="list-decimal list-inside space-y-1">
+              <h3 className="mb-2 font-semibold text-gray-800">使用方法</h3>
+              <ol className="list-inside list-decimal space-y-1">
                 <li>デバイスのNFC設定を有効にする</li>
                 <li>「カード読み取り開始」ボタンを押す</li>
                 <li>Mykiカードをデバイスの背面に近づける</li>
@@ -109,10 +98,18 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t mt-12">
-        <div className="max-w-4xl mx-auto px-4 py-6 text-center text-gray-500 text-sm">
+      <footer className="mt-12 border-t bg-white">
+        <div className="mx-auto max-w-4xl px-4 py-6 text-center text-gray-500 text-sm">
           <p className="mt-1">
-            This website is created by <a href="https://github.com/nasustim" className="text-blue-500 hover:text-blue-600">nasustim</a> with <a className="text-blue-500 hover:text-blue-600" href="https://www.cursor.com/">Cursor</a>.
+            This website is created by{' '}
+            <a href="https://github.com/nasustim" className="text-blue-500 hover:text-blue-600">
+              nasustim
+            </a>{' '}
+            with{' '}
+            <a className="text-blue-500 hover:text-blue-600" href="https://www.cursor.com/">
+              Cursor
+            </a>
+            .
           </p>
         </div>
       </footer>

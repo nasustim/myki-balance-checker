@@ -66,26 +66,24 @@ export default function RootLayout({
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta name="msapplication-TileColor" content="#3b82f6" />
         <meta name="msapplication-tap-highlight" content="no" />
-        
+
         {/* Apple Touch Icons */}
         <link rel="apple-touch-icon" href="/icon-192x192.png" />
         <link rel="apple-touch-icon" sizes="152x152" href="/icon-192x192.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/icon-192x192.png" />
         <link rel="apple-touch-icon" sizes="167x167" href="/icon-192x192.png" />
-        
+
         {/* Standard Icons */}
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#3b82f6" />
         <link rel="shortcut icon" href="/favicon.ico" />
-        
+
         {/* Splash Screens for iOS */}
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>
-      <body className={`${geist.variable} ${geistMono.variable} antialiased`}>
-        {children}
-      </body>
+      <body className={`${geist.variable} ${geistMono.variable} antialiased`}>{children}</body>
     </html>
   );
 }

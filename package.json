@@ -9,11 +9,11 @@
     "export": "next build && next export",
     "static": "next build",
     "lint": "biome lint src/",
-    "lint:fix": "biome lint --write src/",
+    "lint:fix": "biome lint --write --unsafe src/",
     "format": "biome format src/",
-    "format:fix": "biome format --write src/",
+    "format:fix": "biome format --write --unsafe src/",
     "check": "biome check src/",
-    "check:fix": "biome check --write src/"
+    "check:fix": "biome check --write --unsafe src/"
   },
   "dependencies": {
     "next": "15.3.4",
