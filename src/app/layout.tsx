@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import { metadata as siteMetadata } from './metadata';
-import '../globals.css';
+import './globals.css';
+import { useId } from 'react';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -23,11 +24,9 @@ export const viewport: Viewport = {
   colorScheme: 'light',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const mainContentId = useId();
+
   return (
     <html lang="ja" className="scroll-smooth">
       <head>
@@ -62,13 +61,13 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         {/* Skip to main content for accessibility */}
         <a
-          href="#main-content"
+          href={`#${mainContentId}`}
           className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-blue-600 focus:px-4 focus:py-2 focus:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           メインコンテンツにスキップ
         </a>
 
-        <div id="main-content">{children}</div>
+        <div id={mainContentId}>{children}</div>
       </body>
     </html>
   );
