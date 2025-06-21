@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import {
   ExclamationIcon,
   InformationCircleIcon,
@@ -10,6 +9,7 @@ import {
 import { type MykiCardData, parseMykiCardData } from '@/feature/myki';
 import type { NFCSupport } from '@/repository/nfc';
 import { checkNFCSupport, getNFCReader, logNFCData } from '@/repository/nfc';
+import { useEffect, useState } from 'react';
 import { ErrorCard, InfoCard } from './Card';
 import LoadingSpinner from './LoadingSpinner';
 import StatusBadge from './StatusBadge';

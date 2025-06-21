@@ -3,9 +3,9 @@
 // Calculate data entropy
 export function calculateDataEntropy(bytes: Uint8Array): number {
   const freq: { [key: number]: number } = {};
-  bytes.forEach((b) => {
+  for (const b of bytes) {
     freq[b] = (freq[b] || 0) + 1;
-  });
+  }
 
   const entropy = Object.values(freq).reduce((sum, count) => {
     const p = count / bytes.length;
@@ -18,9 +18,9 @@ export function calculateDataEntropy(bytes: Uint8Array): number {
 // Find most frequent bytes
 export function findMostFrequentBytes(bytes: Uint8Array): Array<{ byte: number; count: number }> {
   const freq: { [key: number]: number } = {};
-  bytes.forEach((b) => {
+  for (const b of bytes) {
     freq[b] = (freq[b] || 0) + 1;
-  });
+  }
 
   return Object.entries(freq)
     .map(([byte, count]) => ({ byte: Number.parseInt(byte), count }))
@@ -81,7 +81,7 @@ export function extractPossibleStrings(bytes: Uint8Array): string[] {
   const strings: string[] = [];
   let currentString = '';
 
-  bytes.forEach((byte) => {
+  for (const byte of bytes) {
     if (byte >= 32 && byte <= 126) {
       // Printable ASCII
       currentString += String.fromCharCode(byte);
@@ -91,7 +91,7 @@ export function extractPossibleStrings(bytes: Uint8Array): string[] {
       }
       currentString = '';
     }
-  });
+  }
 
   if (currentString.length > 2) {
     strings.push(currentString);

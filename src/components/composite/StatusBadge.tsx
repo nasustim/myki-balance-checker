@@ -89,7 +89,7 @@ export default function StatusBadge({
   return (
     <span
       className={`inline-flex items-center gap-1.5 rounded-full border font-medium ${sizeClasses[size]} 
-        ${statusClasses[status]} ${animated && status === 'success' ? 'animate-success-bounce' : ''}transition-all-smooth `}
+        ${statusClasses[status]} ${animated && status === 'success' ? 'animate-success-bounce' : ''}transition-all-smooth`}
     >
       {statusIcons[status]}
       {children}

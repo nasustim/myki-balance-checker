@@ -1,94 +1,75 @@
 import type { Metadata, Viewport } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
-import './globals.css';
+import { Inter } from 'next/font/google';
+import { metadata as siteMetadata } from './metadata';
+import '../globals.css';
 
-const geist = Geist({
-  variable: '--font-geist-sans',
+const inter = Inter({
   subsets: ['latin'],
+  display: 'swap',
+  preload: true,
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
-
-export const metadata: Metadata = {
-  title: 'Myki残高チェッカー - NFC Balance Reader',
-  description: 'NFCを使用してMykiカードの残高と利用履歴を確認できるWebアプリ',
-  keywords: ['myki', 'balance', 'nfc', 'melbourne', 'public transport', '残高確認'],
-  authors: [{ name: 'Myki Balance Checker' }],
-  creator: 'Myki Balance Checker',
-  publisher: 'Myki Balance Checker',
-  robots: 'noindex, nofollow, noarchive, nosnippet, noimageindex',
-  manifest: '/manifest.json',
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'default',
-    title: 'Myki Balance',
-  },
-  openGraph: {
-    type: 'website',
-    locale: 'ja_JP',
-    title: 'Myki残高チェッカー',
-    description: 'NFCを使用してMykiカードの残高を確認',
-    siteName: 'Myki Balance Checker',
-  },
-  twitter: {
-    card: 'summary',
-    title: 'Myki残高チェッカー',
-    description: 'NFCを使用してMykiカードの残高を確認',
-  },
-};
+export const metadata: Metadata = siteMetadata;
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
-  themeColor: '#3b82f6',
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#2563eb' },
+    { media: '(prefers-color-scheme: dark)', color: '#1d4ed8' },
+  ],
+  colorScheme: 'light',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="ja">
+    <html lang="ja" className="scroll-smooth">
       <head>
-        {/* Beta Site - Block All Crawlers */}
-        <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
-        <meta name="googlebot" content="noindex, nofollow" />
-        <meta name="bingbot" content="noindex, nofollow" />
+        {/* Preconnect to external domains for performance */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
 
-        {/* PWA Meta Tags */}
-        <meta name="application-name" content="Myki Balance" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Myki Balance" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="msapplication-config" content="/browserconfig.xml" />
-        <meta name="msapplication-TileColor" content="#3b82f6" />
+        {/* DNS prefetch for potential external resources */}
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+
+        {/* Security headers */}
+        <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
+        <meta httpEquiv="X-Frame-Options" content="DENY" />
+        <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
+        <meta httpEquiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+
+        {/* Performance hints */}
+        <link rel="preload" href="/manifest.json" as="fetch" crossOrigin="anonymous" />
+
+        {/* Microsoft Edge/IE specific */}
         <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="msapplication-navbutton-color" content="#2563eb" />
 
-        {/* Apple Touch Icons */}
-        <link rel="apple-touch-icon" href="/icon-192x192.png" />
-        <link rel="apple-touch-icon" sizes="152x152" href="/icon-192x192.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/icon-192x192.png" />
-        <link rel="apple-touch-icon" sizes="167x167" href="/icon-192x192.png" />
+        {/* Safari specific */}
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-touch-fullscreen" content="yes" />
 
-        {/* Standard Icons */}
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#3b82f6" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-
-        {/* Splash Screens for iOS */}
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        {/* Disable automatic phone number detection */}
+        <meta name="format-detection" content="telephone=no" />
       </head>
-      <body className={`${geist.variable} ${geistMono.variable} antialiased`}>{children}</body>
+      <body className={`${inter.className} antialiased`}>
+        {/* Skip to main content for accessibility */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-blue-600 focus:px-4 focus:py-2 focus:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          メインコンテンツにスキップ
+        </a>
+
+        <div id="main-content">{children}</div>
+      </body>
     </html>
   );
 }

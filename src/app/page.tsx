@@ -1,7 +1,5 @@
 'use client';
 
-import Link from 'next/link';
-import { useState } from 'react';
 import { InfoCard, SuccessCard } from '@/components/composite/Card';
 import MykiCard from '@/components/composite/MykiCard';
 import NFCReader from '@/components/composite/NFCReader';
@@ -18,6 +16,8 @@ import {
   ShieldIcon,
 } from '@/components/ui/icons';
 import type { MykiCardData } from '@/feature/myki';
+import Link from 'next/link';
+import { useState } from 'react';
 
 export default function Home() {
   const [cardData, setCardData] = useState<MykiCardData | null>(null);
@@ -244,14 +244,14 @@ export default function Home() {
                         />
                         <div>
                           <h3 className="mb-2 font-semibold text-green-800">
-                            🏗️ Phase 3: UI/UX開発完了
+                            🚀 Phase 4: 静的サイト最適化 & PWA対応完了
                           </h3>
                           <ul className="space-y-1 text-green-700 text-sm">
-                            <li>• 美しいアニメーションとトランジション</li>
-                            <li>• 再利用可能なUIコンポーネント</li>
-                            <li>• レスポンシブデザインの改善</li>
-                            <li>• アクセシビリティの向上</li>
-                            <li>• モダンなビジュアルデザイン</li>
+                            <li>• 静的サイト生成（Next.js Export）</li>
+                            <li>• PWA機能（オフライン対応・アプリインストール）</li>
+                            <li>• パフォーマンス最適化（バンドルサイズ・キャッシュ）</li>
+                            <li>• セキュリティ強化（ヘッダー・CSP設定）</li>
+                            <li>• SEO制御（noindex/nofollow維持）</li>
                           </ul>
                         </div>
                       </div>
@@ -307,7 +307,7 @@ export default function Home() {
               </div>
               <div>
                 <p className="font-semibold text-gray-800">Myki Balance Checker</p>
-                <p className="text-gray-600 text-sm">Phase 3: UI/UX Development Complete</p>
+                <p className="text-gray-600 text-sm">Phase 4: 静的サイト最適化 & PWA対応完了</p>
               </div>
             </div>
 
