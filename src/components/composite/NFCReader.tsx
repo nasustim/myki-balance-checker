@@ -1,6 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import {
+  ExclamationIcon,
+  InformationCircleIcon,
+  MobileDeviceIcon,
+  NFCIcon,
+} from '@/components/ui/icons';
 import { type MykiCardData, parseMykiCardData } from '@/feature/myki';
 import type { NFCSupport } from '@/repository/nfc';
 import { checkNFCSupport, getNFCReader, logNFCData } from '@/repository/nfc';
@@ -112,21 +118,11 @@ export default function NFCReader({ onCardRead, onError }: NFCReaderProps) {
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <div className="rounded-full bg-red-100 p-2">
-              <svg
+              <ExclamationIcon
                 className="h-6 w-6 text-red-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
                 aria-label="Warning icon"
-              >
-                <title>Warning</title>
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
-                />
-              </svg>
+                title="Warning"
+              />
             </div>
             <div>
               <h3 className="font-semibold text-lg text-red-800">NFC非対応</h3>
@@ -180,15 +176,7 @@ export default function NFCReader({ onCardRead, onError }: NFCReaderProps) {
         <div className="text-center">
           <div className="mb-3 inline-flex items-center gap-3">
             <div className="rounded-full bg-blue-100 p-3">
-              <svg
-                className="h-8 w-8 text-blue-600"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-label="NFC icon"
-              >
-                <title>NFC</title>
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
-              </svg>
+              <NFCIcon className="h-8 w-8 text-blue-600" aria-label="NFC icon" title="NFC" />
             </div>
             <div className="text-left">
               <h3 className="font-semibold text-blue-800 text-xl">Mykiカード読み取り</h3>
@@ -226,21 +214,11 @@ export default function NFCReader({ onCardRead, onError }: NFCReaderProps) {
             <div className="rounded-xl border-2 border-blue-200 border-dashed bg-gradient-to-br from-blue-50 to-green-50 p-6">
               <div className="mb-4">
                 <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
-                  <svg
+                  <MobileDeviceIcon
                     className="h-8 w-8 text-blue-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
                     aria-label="Mobile device icon"
-                  >
-                    <title>Mobile Device</title>
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
-                    />
-                  </svg>
+                    title="Mobile Device"
+                  />
                 </div>
                 <p className="font-medium text-blue-700">
                   カードをデバイスの背面に近づけて、読み取りボタンを押してください
@@ -254,21 +232,11 @@ export default function NFCReader({ onCardRead, onError }: NFCReaderProps) {
               className="focus-ring w-full transform rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-4 font-semibold text-white transition-all-smooth hover:scale-105 hover:from-blue-700 hover:to-blue-800 hover:shadow-lg"
             >
               <span className="flex items-center justify-center gap-3">
-                <svg
+                <MobileDeviceIcon
                   className="h-6 w-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
                   aria-label="Start reading icon"
-                >
-                  <title>Start Reading</title>
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
-                  />
-                </svg>
+                  title="Start Reading"
+                />
                 カード読み取り開始
               </span>
             </button>
@@ -296,19 +264,11 @@ export default function NFCReader({ onCardRead, onError }: NFCReaderProps) {
         {/* Instructions */}
         <div className="rounded-lg border border-blue-200 bg-blue-50 p-4">
           <h4 className="mb-3 flex items-center gap-2 font-medium text-blue-800">
-            <svg
+            <InformationCircleIcon
               className="h-5 w-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
               aria-label="Information icon"
-            >
-              <title>Information</title>
-              <path
-                fillRule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                clipRule="evenodd"
-              />
-            </svg>
+              title="Information"
+            />
             使用方法
           </h4>
           <ul className="space-y-2 text-blue-700 text-sm">

@@ -1,5 +1,12 @@
 'use client';
 
+import {
+  CashIcon,
+  CreditCardIcon,
+  DocumentTextIcon,
+  InformationCircleIcon,
+  XCircleIcon,
+} from '@/components/ui/icons';
 import type { MykiCardData } from '@/feature/myki';
 import { ErrorCard, InfoCard } from './Card';
 
@@ -14,19 +21,7 @@ export default function MykiCard({ cardData, error }: MykiCardProps) {
       <ErrorCard className="animate-fade-in-up">
         <div className="flex items-start gap-3">
           <div className="flex-shrink-0 rounded-full bg-red-100 p-2">
-            <svg
-              className="h-5 w-5 text-red-600"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              aria-label="Error icon"
-            >
-              <title>Error</title>
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <XCircleIcon className="h-5 w-5 text-red-600" aria-label="Error icon" title="Error" />
           </div>
           <div>
             <h3 className="mb-1 font-semibold text-red-800">エラーが発生しました</h3>
@@ -42,21 +37,11 @@ export default function MykiCard({ cardData, error }: MykiCardProps) {
       <InfoCard className="animate-fade-in-up text-center">
         <div className="py-12">
           <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
-            <svg
+            <CreditCardIcon
               className="h-10 w-10 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
               aria-label="Card placeholder"
-            >
-              <title>Card Placeholder</title>
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-              />
-            </svg>
+              title="Card Placeholder"
+            />
           </div>
           <h3 className="mb-2 font-medium text-gray-600 text-lg">カード情報</h3>
           <p className="text-gray-500 text-sm">
@@ -89,10 +74,7 @@ function BalanceCard({ cardData }: { cardData: MykiCardData }) {
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20">
-            <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-label="Myki card">
-              <title>Myki Card</title>
-              <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-            </svg>
+            <CreditCardIcon className="h-6 w-6" aria-label="Myki card" title="Myki Card" />
           </div>
           <div>
             <h3 className="font-semibold text-lg">Myki Card</h3>
@@ -145,21 +127,11 @@ function TransactionHistory({ cardData }: { cardData: MykiCardData }) {
       <InfoCard>
         <div className="py-8 text-center">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
-            <svg
+            <DocumentTextIcon
               className="h-8 w-8 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
               aria-label="No transactions"
-            >
-              <title>No Transactions</title>
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-              />
-            </svg>
+              title="No Transactions"
+            />
           </div>
           <h3 className="mb-2 font-medium text-gray-600 text-lg">取引履歴</h3>
           <p className="text-gray-500 text-sm">取引履歴が見つかりませんでした</p>
@@ -172,21 +144,11 @@ function TransactionHistory({ cardData }: { cardData: MykiCardData }) {
     <InfoCard>
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <svg
+          <DocumentTextIcon
             className="h-5 w-5 text-blue-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
             aria-label="Transaction history"
-          >
-            <title>Transaction History</title>
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-            />
-          </svg>
+            title="Transaction History"
+          />
           <h3 className="font-semibold text-gray-800 text-lg">取引履歴</h3>
           <span className="rounded-full bg-blue-100 px-2 py-1 font-medium text-blue-800 text-xs">
             {cardData.transactions.length}件
@@ -224,21 +186,13 @@ function TransactionItem({
             transaction.type === 'debit' ? 'bg-red-100' : 'bg-green-100'
           }`}
         >
-          <svg
+          <CashIcon
             className={`h-4 w-4 ${
               transaction.type === 'debit' ? 'text-red-600' : 'text-green-600'
             }`}
-            fill="currentColor"
-            viewBox="0 0 20 20"
             aria-label="Transaction"
-          >
-            <title>Transaction</title>
-            <path
-              fillRule="evenodd"
-              d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
-              clipRule="evenodd"
-            />
-          </svg>
+            title="Transaction"
+          />
         </div>
         <div>
           <p className="font-medium text-gray-800">
@@ -269,19 +223,11 @@ function DebugInfo({ cardData }: { cardData: MykiCardData }) {
     <InfoCard>
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <svg
+          <InformationCircleIcon
             className="h-5 w-5 text-gray-600"
-            fill="currentColor"
-            viewBox="0 0 20 20"
             aria-label="Debug information"
-          >
-            <title>Debug Information</title>
-            <path
-              fillRule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-              clipRule="evenodd"
-            />
-          </svg>
+            title="Debug Information"
+          />
           <h3 className="font-semibold text-gray-800 text-lg">デバッグ情報</h3>
         </div>
 
