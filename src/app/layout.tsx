@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'Myki Balance Checker' }],
   creator: 'Myki Balance Checker',
   publisher: 'Myki Balance Checker',
-  robots: 'index, follow',
+  robots: 'noindex, nofollow, noarchive, nosnippet, noimageindex',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
@@ -56,6 +56,11 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <head>
+        {/* Beta Site - Block All Crawlers */}
+        <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+        <meta name="googlebot" content="noindex, nofollow" />
+        <meta name="bingbot" content="noindex, nofollow" />
+
         {/* PWA Meta Tags */}
         <meta name="application-name" content="Myki Balance" />
         <meta name="apple-mobile-web-app-capable" content="yes" />

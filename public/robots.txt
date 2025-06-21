@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /
+
+# This is a beta website and should not be indexed by search engines 
